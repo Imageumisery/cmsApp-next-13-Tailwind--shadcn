@@ -1,18 +1,27 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Modal } from "@/components/ui/modal";
-import React from "react";
+import { useStoreModal } from "@/hooks/useStoreModal";
+import { useEffect } from "react";
 
-type Props = {};
 
-const layout = (props: Props) => {
+const layout = () => {
+    const onOpen = useStoreModal((state) => state.onOpen);
+    const isOpen = useStoreModal((state) => state.isOpen);
+
+    useEffect(() => {
+        if (!isOpen) {
+            onOpen();
+        }
+    }, [isOpen, onOpen]);
+
     return (
         <div className="p-4">
-            <Modal isOpen description="Test desc" onClose={() => {  }} title="Some title" ></Modal>
-            <Button size="lg" variant="destructive">
+            root page
+            {/* <Modal description="desc" isOpen onClose={() => {  }} title="title"/> */}
+            {/* <Button size="lg" variant="destructive">
                 Make the world beautiful again!
-            </Button>
+            </Button> */}
         </div>
     );
 };
