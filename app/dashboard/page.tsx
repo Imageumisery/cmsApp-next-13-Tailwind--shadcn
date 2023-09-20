@@ -1,11 +1,8 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
-
 import { useStoreModal } from "@/hooks/useStoreModal";
 import { useEffect } from "react";
 
-
-const layout = () => {
+const Layout = () => {
     const onOpen = useStoreModal((state) => state.onOpen);
     const isOpen = useStoreModal((state) => state.isOpen);
 
@@ -18,12 +15,12 @@ const layout = () => {
     return (
         <div className="p-4">
             root page
-            {/* <Modal description="desc" isOpen onClose={() => {  }} title="title"/> */}
-            {/* <Button size="lg" variant="destructive">
+            {/* <Modal description="desc" isOpen onClose={() => {  }} title="title"/>
+            <Button size="lg" variant="destructive">
                 Make the world beautiful again!
             </Button> */}
         </div>
     );
 };
 
-export default layout;
+export default Layout;
