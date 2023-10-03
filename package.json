@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -42,6 +42,7 @@
     "zustand": "^4.4.1"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "vite-plugin-checker": "^0.6.2"
   }
 }

@@ -1,17 +1,21 @@
-import { create } from "zustand";
+import { devtools } from "zustand/middleware";
+import { createWithEqualityFn } from "zustand/traditional";
 
-interface useStoreModalInterfaceStore {
+interface StoreModalState {
     isOpen: boolean;
-    onOpen: () => void;
-    onClose: () => void;
+    open: () => void;
+    close: () => void;
 }
 
-export const useStoreModal = create<useStoreModalInterfaceStore>((set) => ({
-    isOpen: false,
-    onOpen: () => {
-        set({ isOpen: true });
-    },
-    onClose: () => {
-        set({ isOpen: false });
-    },
-}));
+export const useStoreModal = createWithEqualityFn<StoreModalState>()(
+    devtools((set) => ({
+        isOpen: false,
+        open: () => {
+            set({ isOpen: true });
+        },
+        close: () => {
+            set({ isOpen: false });
+        },
+    })),
+    Object.is
+);

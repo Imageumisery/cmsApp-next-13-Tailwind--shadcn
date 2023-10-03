@@ -10,6 +10,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { redirect } from "next/navigation";
 
 const formSchema = z.object({
     name: z.string().min(2, {
@@ -32,18 +33,24 @@ const StoreModal = () => {
             const response = await axios.post("/api/stores", values);
             console.log(response.data);
             toast.success("Store created!");
+            window.location.assign(`${response.data.id}`);
+            // window.location.href = `${response.data.id}`;
+            // redirect(`${response.data.id}`);
         } catch (error) {
             toast.error("Something went wrong!");
+            console.log(error);
+            
         } finally {
             setLoading(false);
         }
     }
+
     return (
         <Modal
             title="Create store"
             description="Add a new store to manage products and categories"
             isOpen={storeModal.isOpen}
-            onClose={storeModal.onClose}
+            onClose={storeModal.close}
         >
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -61,7 +68,7 @@ const StoreModal = () => {
                         )}
                     />
                     <div className="pt-6 space-x-2 flex justify-end">
-                        <Button disabled={loading} variant="outline" onClick={storeModal.onClose}>
+                        <Button disabled={loading} variant="outline" type="button" onClick={storeModal.close}>
                             Cancel
                         </Button>
                         <Button disabled={loading} type="submit">
