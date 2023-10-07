@@ -22,9 +22,9 @@ const DashboardLayout = async ({ children, params }: Props) => {
         },
     });
 
-    // if (!store) {
-    //     redirect("/");
-    // }
+    if (!store) {
+        redirect("/");
+    }
 
     
     return (
