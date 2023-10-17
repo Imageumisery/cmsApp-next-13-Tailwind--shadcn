@@ -10,7 +10,7 @@ interface RequestProps {
     };
 }
 
-export async function PATCH({ req, params }: RequestProps) {
+export async function PATCH(req: Request, { params }: { params: { billboardId: string; storeId: string } }) {
     try {
         const { userId } = auth();
         const body = await req.json();
@@ -42,10 +42,10 @@ export async function PATCH({ req, params }: RequestProps) {
             where: {
                 id: params.billboardId,
             },
-            data:{
+            data: {
                 imageUrl,
-                label
-            }
+                label,
+            },
         });
         return NextResponse.json(billboard);
     } catch (error) {
@@ -54,7 +54,7 @@ export async function PATCH({ req, params }: RequestProps) {
     }
 }
 
-export async function DELETE({req, params}:RequestProps) {
+export async function DELETE(_req: Request, { params }: { params: { billboardId: string; storeId: string } }) {
     try {
         const { userId } = auth();
         if (!userId) {
@@ -78,7 +78,7 @@ export async function DELETE({req, params}:RequestProps) {
 
         const billboard = await prismaDb.billboard.delete({
             where: {
-                id:params.billboardId
+                id: params.billboardId,
             },
         });
         return NextResponse.json(billboard);
@@ -87,7 +87,7 @@ export async function DELETE({req, params}:RequestProps) {
         return new NextResponse("Internal error", { status: 500 });
     }
 }
-export async function GET({req, params}:RequestProps) {
+export async function GET(_req: Request, { params }: { params: { billboardId: string; storeId: string } }) {
     try {
         const { userId } = auth();
         if (!userId) {
@@ -95,7 +95,7 @@ export async function GET({req, params}:RequestProps) {
         }
         const billboard = await prismaDb.billboard.findUnique({
             where: {
-                id:params.billboardId
+                id: params.billboardId,
             },
         });
         return NextResponse.json(billboard);

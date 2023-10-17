@@ -51,7 +51,7 @@ const BillboardForm = ({ initialData }: BillboardFormProps) => {
         try {
             setLoading(true);
             if (initialData) {
-                axios.patch(`/api/${params.storeId}/billboards/${params.billboardId}`, data);
+                axios.patch(`/api/${params.storeId}/billboards/`, data);
             } else {
                 axios.post(`/api/${params.storeId}/billboards`, data);
             }
