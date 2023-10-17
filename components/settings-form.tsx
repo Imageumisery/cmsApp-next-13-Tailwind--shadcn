@@ -1,19 +1,19 @@
 "use client";
-import React, { InputHTMLAttributes, useState } from "react";
-import Heading from "./ui/heading";
-import { Button } from "./ui/button";
-import { Trash } from "lucide-react";
-import { Separator } from "./ui/separator";
-import { store } from "@prisma/client";
-import z from "zod";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
-import { Input } from "./ui/input";
-import toast from "react-hot-toast";
-import { useParams, useRouter } from "next/navigation";
+import { store } from "@prisma/client";
 import axios from "axios";
+import { Trash } from "lucide-react";
+import { useParams, useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import z from "zod";
 import AlertModal from "./modals/AlertModal";
+import { Button } from "./ui/button";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
+import Heading from "./ui/heading";
+import { Input } from "./ui/input";
+import { Separator } from "./ui/separator";
 
 interface SettingFormProps {
     initialData: store;
@@ -71,7 +71,6 @@ const SettingsForm = ({ initialData }: SettingFormProps) => {
                 loading={loading}
                 onClose={() => setOpen(false)}
                 onSubmit={onDelete}
-                // name={initialData.name}
             />
             <div className="flex items-center justify-between">
                 <Heading title="Settings" description="Manage store preferences" />
