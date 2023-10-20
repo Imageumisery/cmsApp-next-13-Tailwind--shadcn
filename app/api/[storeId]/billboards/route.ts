@@ -53,7 +53,7 @@ export async function POST(req: Request, { params }: { params: { storeId: string
     }
 }
 
-export async function GET(_req: Request, { params }: { params: {storeId: string } }) {
+export async function GET(_req: Request, { params }: { params: { storeId: string } }) {
     try {
         if (!params.storeId) {
             return new NextResponse("StoreId is required!", { status: 400 });

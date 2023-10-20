@@ -48,14 +48,13 @@ const BillboardForm = ({ initialData }: BillboardFormProps) => {
     });
 
     const onSubmit = async (data: BillboardFormValues) => {
-        try {
+        try {    
             setLoading(true);
             if (initialData) {
-                axios.patch(`/api/${params.storeId}/billboards/`, data);
+                axios.patch(`/api/${params.storeId}/billboards`, data);
             } else {
                 axios.post(`/api/${params.storeId}/billboards`, data);
             }
-
             router.refresh();
             router.push(`/${params.storeId}/billboards`);
             toast.success(toastMessage);
@@ -106,7 +105,7 @@ const BillboardForm = ({ initialData }: BillboardFormProps) => {
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-9 w-full">
                     <FormField
                         control={form.control}
-                        name="label"
+                        name="imageUrl"
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Backround image</FormLabel>
