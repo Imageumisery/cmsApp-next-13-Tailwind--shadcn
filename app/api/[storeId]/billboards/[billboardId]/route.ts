@@ -54,7 +54,7 @@ export async function PATCH(req: Request, { params }: { params: { billboardId: s
     }
 }
 
-export async function DELETE(_req: Request, { params }: { params: { billboardId: string; storeId: string } }) {
+export async function DELETE(req: Request, { params }: { params: { billboardId: string; storeId: string } }) {
     try {
         const { userId } = auth();
         if (!userId) {
@@ -87,7 +87,7 @@ export async function DELETE(_req: Request, { params }: { params: { billboardId:
         return new NextResponse("Internal error", { status: 500 });
     }
 }
-export async function GET(_req: Request, { params }: { params: { billboardId: string; storeId: string } }) {
+export async function GET(req: Request, { params }: { params: { billboardId: string; storeId: string } }) {
     try {
         const { userId } = auth();
         if (!userId) {

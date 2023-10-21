@@ -11,7 +11,7 @@ interface AlertModalProps {
 const AlertModal = ({ loading, onClose, isOpen, onSubmit }: AlertModalProps) => {
     return (
         <Modal
-            title="Delete store"
+            title="Delete"
             description="This action can't be undone!"
             isOpen={isOpen}
             onClose={onClose}

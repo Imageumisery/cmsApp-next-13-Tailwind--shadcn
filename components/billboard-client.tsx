@@ -6,7 +6,7 @@ import { Plus } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { Separator } from "./ui/separator";
-import { BillboardColumn } from "./ui/columns";
+import { BillboardColumn, columns } from "./ui/columns";
 import { DataTable } from "./data-table";
 
 interface BillboardClientProps {
@@ -27,7 +27,7 @@ const BillboardClient = ({ data }: BillboardClientProps) => {
                 </Button>
             </div>
             <Separator />
-            <DataTable data={data} columns={[]}/>
+            <DataTable data={data} columns={columns}/>
         </div>
     );
 };

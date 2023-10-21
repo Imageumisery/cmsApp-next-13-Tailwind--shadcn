@@ -30,7 +30,7 @@ const DashboardLayout = async ({ children, params }: Props) => {
     return (
         <div>
             <Navbar />
-            <div className="a">DashboardLayout</div>
+            <div className="a"></div>
             {children}
         </div>
     );
