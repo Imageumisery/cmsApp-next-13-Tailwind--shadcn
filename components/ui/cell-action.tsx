@@ -34,8 +34,8 @@ export const CellAction = ({ data }: CellActionProps) => {
     const onDelete = async () => {
       try {
           setLoading(true);
-          axios.delete(`/api/stores/${params.storeId}/billboards/${data.id}`);
-          // router.refresh();
+          axios.delete(`/api/${params.storeId}/billboards/${data.id}`);
+          router.refresh();
           toast.success("Billboard deleted!");
       } catch (error) {
           toast.error("Make sure you removed all categories using this billboard first.");
