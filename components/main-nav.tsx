@@ -3,7 +3,6 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 import React from "react";
-import StoreSwitcher from "./store-switcher";
 
 const MainNav = ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => {
     const pathName = usePathname();
@@ -18,6 +17,21 @@ const MainNav = ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => 
             href: `/${params.storeId}/billboards`,
             label: "Billboards",
             active: pathName === `/${params.storeId}/billboards`,
+        },
+        {
+            href: `/${params.storeId}/categories`,
+            label: "Categories",
+            active: pathName === `/${params.storeId}/categories`,
+        },
+        {
+            href: `/${params.storeId}/colors`,
+            label: "Colors",
+            active: pathName === `/${params.storeId}/colors`,
+        },
+        {
+            href: `/${params.storeId}/Sizes`,
+            label: "Sizes",
+            active: pathName === `/${params.storeId}/sizes`,
         },
         {
             href: `/${params.storeId}/settings`,

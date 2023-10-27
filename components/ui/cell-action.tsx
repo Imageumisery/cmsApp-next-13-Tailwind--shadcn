@@ -15,14 +15,17 @@ import { BillboardColumn } from "./columns";
 import { useState } from "react";
 import AlertModal from "../modals/AlertModal";
 import axios from "axios";
+import { CategoryColumn } from "@/app/(dashboard)/[storeId]/(routes)/categories/components/columns";
 
 interface CellActionProps {
-    data: BillboardColumn;
+    data: BillboardColumn | CategoryColumn;
+    name: string;
 }
 
-export const CellAction = ({ data }: CellActionProps) => {
+export const CellAction = ({ data, name }: CellActionProps) => {
     const router = useRouter();
     const params = useParams();
+    const nameForDelete = name.replace(name.charAt(name.length - 1), '');
 
     const [loading, setLoading] = useState<boolean>(false);
     const [open, setOpen] = useState<boolean>(false);
@@ -34,9 +37,9 @@ export const CellAction = ({ data }: CellActionProps) => {
     const onDelete = async () => {
       try {
           setLoading(true);
-          axios.delete(`/api/${params.storeId}/billboards/${data.id}`);
+          axios.delete(`/api/${params.storeId}/${name}/${data.id}`);
           router.refresh();
-          toast.success("Billboard deleted!");
+          toast.success(`${nameForDelete} deleted!`);
       } catch (error) {
           toast.error("Make sure you removed all categories using this billboard first.");
       } finally {
@@ -61,7 +64,7 @@ export const CellAction = ({ data }: CellActionProps) => {
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/billboards/${data.id}`)}>
+                    <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/${name}/${data.id}`)}>
                         <PenSquare className="h-4 w-4 mr-2" />
                         Edit
                     </DropdownMenuItem>
