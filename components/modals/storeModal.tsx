@@ -1,16 +1,15 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useStoreModal } from "@/hooks/useStoreModal";
-import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/ui/modal";
+import { useStoreModal } from "@/hooks/useStoreModal";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import axios from "axios";
-import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { redirect } from "next/navigation";
+import * as z from "zod";
 
 const formSchema = z.object({
     name: z.string().min(2, {

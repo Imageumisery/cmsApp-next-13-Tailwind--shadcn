@@ -34,10 +34,10 @@ const BillboardForm = ({ initialData }: BillboardFormProps) => {
     const params = useParams();
     const router = useRouter();
 
-    const title = initialData ? 'Edit billboard' : 'Create billboard';
-    const description = initialData ? 'Edit a billboard.' : 'Add a new billboard';
-    const toastMessage = initialData ? 'Billboard updated.' : 'Billboard created.';
-    const action = initialData ? 'Save changes' : 'Create';
+    const title = initialData ? "Edit billboard" : "Create billboard";
+    const description = initialData ? "Edit a billboard" : "Add a new billboard";
+    const toastMessage = initialData ? "Billboard updated" : "Billboard created";
+    const action = initialData ? "Save changes" : "Create";
 
     const form = useForm<BillboardFormValues>({
         resolver: zodResolver(formSchema),
@@ -48,10 +48,10 @@ const BillboardForm = ({ initialData }: BillboardFormProps) => {
     });
 
     const onSubmit = async (data: BillboardFormValues) => {
-        try {    
+        try {
             setLoading(true);
             if (initialData) {
-                axios.patch(`/api/${params.storeId}/billboards`, data);
+                axios.patch(`/api/${params.storeId}/billboards/${params.billboardId}`, data);
             } else {
                 axios.post(`/api/${params.storeId}/billboards`, data);
             }
@@ -81,12 +81,7 @@ const BillboardForm = ({ initialData }: BillboardFormProps) => {
     };
     return (
         <div>
-            <AlertModal 
-                isOpen={open} 
-                loading={loading} 
-                onClose={() => setOpen(false)} 
-                onSubmit={onDelete} 
-                />
+            <AlertModal isOpen={open} loading={loading} onClose={() => setOpen(false)} onSubmit={onDelete} />
             <div className="flex items-center justify-between">
                 <Heading title={title} description={description} />
                 {initialData && (
@@ -111,12 +106,11 @@ const BillboardForm = ({ initialData }: BillboardFormProps) => {
                                 <FormLabel>Backround image</FormLabel>
                                 <FormControl>
                                     <ImageUpload
-                                        value={field.value ? [field.value]: []}
-                                        disabled={loading} 
-                                        onChange={(url:string) => field.onChange(url)}
+                                        value={field.value ? [field.value] : []}
+                                        disabled={loading}
+                                        onChange={(url: string) => field.onChange(url)}
                                         onRemove={() => field.onChange("")}
-                                        />
-                                        
+                                    />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -130,7 +124,7 @@ const BillboardForm = ({ initialData }: BillboardFormProps) => {
                                 <FormItem>
                                     <FormLabel>Label</FormLabel>
                                     <FormControl>
-                                        <Input disabled={loading} placeholder="Billboard label" {...field}/>
+                                        <Input disabled={loading} placeholder="Billboard label" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>

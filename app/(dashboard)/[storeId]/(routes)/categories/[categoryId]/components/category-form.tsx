@@ -26,7 +26,7 @@ const formSchema = z.object({
     billboardId: z.string().min(1),
 });
 
-type BillboardFormValues = z.infer<typeof formSchema>;
+type CategoryFormValues = z.infer<typeof formSchema>;
 
 const CategoryForm = ({ initialData, billboards }: CategoryFormProps) => {
     const [loading, setLoading] = useState<boolean>(false);
@@ -40,7 +40,7 @@ const CategoryForm = ({ initialData, billboards }: CategoryFormProps) => {
     const toastMessage = initialData ? "Category updated." : "Category created.";
     const action = initialData ? "Save changes" : "Create";
 
-    const form = useForm<BillboardFormValues>({
+    const form = useForm<CategoryFormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: initialData || {
             name: "",
@@ -48,11 +48,11 @@ const CategoryForm = ({ initialData, billboards }: CategoryFormProps) => {
         },
     });
 
-    const onSubmit = async (data: BillboardFormValues) => {
+    const onSubmit = async (data: CategoryFormValues) => {
         try {
             setLoading(true);
             if (initialData) {
-                axios.patch(`/api/${params.storeId}/categories`, data);
+                axios.patch(`/api/${params.storeId}/categories/${params.categoryId}`, data);
             } else {
                 axios.post(`/api/${params.storeId}/categories`, data);
             }
@@ -69,7 +69,7 @@ const CategoryForm = ({ initialData, billboards }: CategoryFormProps) => {
     const onDelete = async () => {
         try {
             setLoading(true);
-            axios.delete(`/api/${params.storeId}/categories/${params.billboardId}`);
+            axios.delete(`/api/${params.storeId}/categories/${params.categoryId}`);
             router.refresh();
             router.push("/");
             toast.success("Category deleted!");
@@ -119,19 +119,28 @@ const CategoryForm = ({ initialData, billboards }: CategoryFormProps) => {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Billboard</FormLabel>
-                                    <Select disabled={loading} value={field.value} defaultValue={field.value} onValueChange={field.onChange}>
+                                    <Select
+                                        disabled={loading || billboards.length == 0}
+                                        value={field.value}
+                                        defaultValue={field.value}
+                                        onValueChange={field.onChange}
+                                    >
                                         <SelectTrigger>
-                                            <SelectValue defaultValue={field.value} placeholder="Select a Billboard" />
+                                            <SelectValue
+                                                defaultValue={field.value}
+                                                placeholder={
+                                                    billboards.length == 0
+                                                        ? "No billboards created yet"
+                                                        : "Select a Billboard"
+                                                }
+                                            />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            {billboards.length ?
-                                            billboards.map((billboard) => (
-                                                <SelectItem key={billboard.id} value={billboard.label}>
+                                            {billboards.map((billboard) => (
+                                                <SelectItem key={billboard.id} value={billboard.id}>
                                                     {billboard.label}
                                                 </SelectItem>
-                                            )) :
-                                            (<SelectItem>No billboards created yet.</SelectItem>)
-                                            }
+                                            ))}
                                         </SelectContent>
                                     </Select>
                                     <FormMessage />

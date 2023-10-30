@@ -1,5 +1,3 @@
-import BillboardClient from "@/components/billboard-client";
-import { BillboardColumn } from "@/components/ui/columns";
 import prismaDb from "@/lib/prismadb";
 import CategoryClient from "./components/category-client";
 import { CategoryColumn } from "./components/columns";
@@ -9,25 +7,26 @@ const CategoriesPage = async ({ params }: { params: { storeId: string } }) => {
         where: {
             storeId: params.storeId,
         },
-        include:{
-            billboard:true,
+        include: {
+            billboard: true,
         },
         orderBy: {
-          createdAt: 'desc'
-        }
+            createdAt: "desc",
+        },
     });
-    const foramttedCategorires: CategoryColumn[] = categories.map((item) => {
+    const formattedCategories: CategoryColumn[] = categories.map((category) => {
         return {
-            id: item.id,
-            billboardLabel: item.billboard.label,
-            name:item.name,
-            createdAt: item.createdAt.toLocaleDateString(),
+            id: category.id,
+            name: category.name,
+            billboardLabel: category?.billboard.label,
+            createdAt: category.createdAt.toLocaleDateString(),
         };
     });
+
     return (
         <div className="flex-col">
             <div className="space-y-4 p-8 pt-6">
-                <CategoryClient data={foramttedCategorires} />
+                <CategoryClient data={formattedCategories} />
             </div>
         </div>
     );

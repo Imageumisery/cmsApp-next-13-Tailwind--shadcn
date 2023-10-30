@@ -30,7 +30,7 @@ model Billboard {
   storeId    String
   store      store      @relation("StoreToBillboard", fields: [storeId], references: [id])
   categories Category[]
-  label      String     @unique
+  label      String
   imageUrl   String
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt

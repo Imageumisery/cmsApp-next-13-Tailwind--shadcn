@@ -1,4 +1,3 @@
-import BillboardForm from "@/components/billboard-form";
 import prismaDb from "@/lib/prismadb";
 import CategoryForm from "./components/category-form";
 
@@ -16,7 +15,7 @@ const CategoryPage = async ({ params }: { params: { categoryId: string; storeId:
     return (
         <div className="flex-col">
             <div className="space-y-4 p-8 pt-6">
-                <CategoryForm initialData={category} billboards={billboards}/>
+                <CategoryForm initialData={category} billboards={billboards} />
             </div>
         </div>
     );
