@@ -16,7 +16,7 @@ export async function PATCH(req: Request, { params }: { params: { billboardId: s
         const body = await req.json();
         const { label, imageUrl } = body;
         
-        console.log('start');
+        
         if (!userId) {
             return new NextResponse("Unauthenticated", { status: 401 });
         }
@@ -29,7 +29,7 @@ export async function PATCH(req: Request, { params }: { params: { billboardId: s
         if (!imageUrl) {
             return new NextResponse("ImageUrl is required", { status: 400 });
         }
-        const storeByUserId = prismaDb.store.findFirst({
+        const storeByUserId = await prismaDb.store.findFirst({
             where: {
                 id: params.storeId,
                 userId,
@@ -39,7 +39,7 @@ export async function PATCH(req: Request, { params }: { params: { billboardId: s
         if (!storeByUserId) {
             return new NextResponse("Unauthorized", { status: 403 });
         }
-        const billboard = prismaDb.billboard.update({
+        const billboard = await prismaDb.billboard.update({
             where: {
                 id: params.billboardId,
             },
@@ -48,7 +48,6 @@ export async function PATCH(req: Request, { params }: { params: { billboardId: s
                 imageUrl,
             },
         });
-        console.log('succes');
         return NextResponse.json(billboard);
     } catch (error) {
         console.log("[BILLBOARD_PATCH]", error);

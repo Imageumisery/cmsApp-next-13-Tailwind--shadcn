@@ -14,6 +14,7 @@ export async function PATCH(req: Request, { params }: { params: { storeId: strin
         const { userId } = auth();
         const body = await req.json();
         const { name, billboardId } = body;
+        
 
         if (!userId) {
             return new NextResponse("Unauthenticated", { status: 401 });
@@ -51,6 +52,7 @@ export async function PATCH(req: Request, { params }: { params: { storeId: strin
                 billboardId,
             },
         });
+
         return NextResponse.json(category);
     } catch (error) {
         console.log("[CATEGORIES_POST]", error);
