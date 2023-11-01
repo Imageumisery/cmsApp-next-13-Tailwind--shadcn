@@ -15,9 +15,10 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import AlertModal from "../modals/AlertModal";
 import { BillboardColumn } from "./columns";
+import { SizeColumn } from "@/app/(dashboard)/[storeId]/(routes)/sizes/components/columns";
 
 interface CellActionProps {
-    data: BillboardColumn | CategoryColumn;
+    data: BillboardColumn | CategoryColumn | SizeColumn;
 }
 
 export const CellAction = ({ data }: CellActionProps) => {
@@ -35,6 +36,10 @@ export const CellAction = ({ data }: CellActionProps) => {
         if ("billboardLabel" in data) {
             // toast.success("It's a category!!");
             return "categories";
+        }
+        if ("value" in data) {
+            // toast.success("It's a category!!");
+            return "sizes";
         }
         if ("label" in data) {
             // toast.success("It's a billboard!!");

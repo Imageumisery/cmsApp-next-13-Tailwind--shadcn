@@ -29,7 +29,7 @@ const MainNav = ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => 
             active: pathName === `/${params.storeId}/colors`,
         },
         {
-            href: `/${params.storeId}/Sizes`,
+            href: `/${params.storeId}/sizes`,
             label: "Sizes",
             active: pathName === `/${params.storeId}/sizes`,
         },
