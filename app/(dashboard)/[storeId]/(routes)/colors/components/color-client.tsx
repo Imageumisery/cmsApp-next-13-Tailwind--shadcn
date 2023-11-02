@@ -5,24 +5,21 @@ import Heading from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
 import { Plus } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import { SizeColumn, columns } from "./columns";
+import { ColorColumn, columns } from "./columns";
 
-interface CategoryClientProps {
-    data: SizeColumn[];
+interface ColorClientProps {
+    data: ColorColumn[];
 }
 
-const SizeClient = ({ data }: CategoryClientProps) => {
+const ColorClient = ({ data }: ColorClientProps) => {
     const params = useParams();
     const router = useRouter();
 
     return (
         <div>
             <div className="flex items-center justify-between">
-                <Heading
-                    title={`Sizes(${data.length})`}
-                    description="Manage your sizes for your store"
-                />
-                <Button onClick={() => router.push(`/${params.storeId}/sizes/new`)}>
+                <Heading title={`Colors(${data.length})`} description="Manage your colors for your store" />
+                <Button onClick={() => router.push(`/${params.storeId}/colors/new`)}>
                     <Plus className="mr-2 w-4 h-4" />
                     Add new
                 </Button>
@@ -33,4 +30,4 @@ const SizeClient = ({ data }: CategoryClientProps) => {
     );
 };
 
-export default SizeClient;
+export default ColorClient;

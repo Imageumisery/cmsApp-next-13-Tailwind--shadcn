@@ -69,7 +69,7 @@ const SizeForm = ({ initialData }: SizeFormProps) => {
             setLoading(true);
             axios.delete(`/api/${params.storeId}/sizes/${params.sizeId}`);
             router.refresh();
-            router.push("/");
+            router.push(`/${params.storeId}/sizes`);
             toast.success("Size deleted!");
         } catch (error) {
             toast.error("Something went wrong.");

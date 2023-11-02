@@ -4,14 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import Heading from "@/components/ui/heading";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Color } from "@prisma/client";
 import axios from "axios";
 import { Trash } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { ChromePicker } from "react-color";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import z from "zod";
@@ -22,14 +22,20 @@ interface ColorFormProps {
 
 const formSchema = z.object({
     name: z.string().min(2),
-    value: z.string().min(1),
+    colorValue: z.string(),
 });
 
-type CategoryFormValues = z.infer<typeof formSchema>;
+type ColorFormValues = z.infer<typeof formSchema>;
 
-const CategoryForm = ({ initialData }: ColorFormProps) => {
+const ColorForm = ({ initialData }: ColorFormProps) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [open, setOpen] = useState<boolean>(false);
+    const [color, setColor] = useState<string>("");
+    useEffect(() => {
+        if (initialData?.colorValue) {
+            setColor(initialData.colorValue);
+        }
+    }, []);
 
     const params = useParams();
     const router = useRouter();
@@ -39,16 +45,17 @@ const CategoryForm = ({ initialData }: ColorFormProps) => {
     const toastMessage = initialData ? "Color updated." : "Color created.";
     const action = initialData ? "Save changes" : "Create";
 
-    const form = useForm<CategoryFormValues>({
+    const form = useForm<ColorFormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: initialData || {
             name: "",
-            value: "",
+            colorValue: "",
         },
     });
 
-    const onSubmit = async (data: CategoryFormValues) => {
+    const onSubmit = async (data: ColorFormValues) => {
         try {
+            data.colorValue = color;
             setLoading(true);
             if (initialData) {
                 axios.patch(`/api/${params.storeId}/colors/${params.colorId}`, data);
@@ -68,9 +75,9 @@ const CategoryForm = ({ initialData }: ColorFormProps) => {
     const onDelete = async () => {
         try {
             setLoading(true);
-            axios.delete(`/api/${params.storeId}/categories/${params.categoryId}`);
+            axios.delete(`/api/${params.storeId}/colors/${params.colorId}`);
             router.refresh();
-            router.push("/");
+            router.push(`/${params.storeId}/colors`);
             toast.success("Color deleted!");
         } catch (error) {
             toast.error("Something went wrong.");
@@ -98,15 +105,20 @@ const CategoryForm = ({ initialData }: ColorFormProps) => {
             <Separator className="mt-4 mb-4" />
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
-                    <div className="md:grid md:grid-cols-3 gap-8">
+                    <div className="md:grid gap-2">
                         <FormField
                             control={form.control}
                             name="name"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Name</FormLabel>
+                                    <FormLabel>Color</FormLabel>
                                     <FormControl>
-                                        <Input disabled={loading} placeholder="Color name" {...field} />
+                                        <Input
+                                            className="w-72"
+                                            disabled={loading}
+                                            placeholder="Color name"
+                                            {...field}
+                                        />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -114,12 +126,16 @@ const CategoryForm = ({ initialData }: ColorFormProps) => {
                         />
                         <FormField
                             control={form.control}
-                            name="value"
+                            name="colorValue"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Billboard</FormLabel>
+                                    <FormLabel>Value</FormLabel>
+                                    <ChromePicker
+                                        color={color}
+                                        onChangeComplete={(pickedColor) => setColor(pickedColor.hex)}
+                                    />
                                     <FormControl>
-                                        <Input disabled={loading} placeholder="value" {...field} />
+                                        <Input className="hidden" {...field} disabled={loading} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -135,4 +151,4 @@ const CategoryForm = ({ initialData }: ColorFormProps) => {
     );
 };
 
-export default CategoryForm;
+export default ColorForm;

@@ -1,22 +1,22 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { CellAction } from "@/components/ui/cell-action";
+import { CellAction, newColor } from "@/components/ui/cell-action";
 
-export type SizeColumn = {
+export type ColorColumn = {
     id: string;
-    name:string;
-    value:string;
+    name: string;
+    colorValue: string;
     createdAt: string;
 };
 
-export const columns: ColumnDef<SizeColumn>[] = [
+export const columns: ColumnDef<newColor>[] = [
     {
         accessorKey: "name",
         header: "Name",
     },
     {
-        accessorKey: "value",
+        accessorKey: "colorValue",
         header: "Value",
     },
     {
@@ -24,7 +24,7 @@ export const columns: ColumnDef<SizeColumn>[] = [
         header: "Date",
     },
     {
-        id:'actions',
-        cell: ({row}) => <CellAction data={row.original}/>
+        id: "actions",
+        cell: ({ row }) => <CellAction data={row.original} />,
     },
 ];
